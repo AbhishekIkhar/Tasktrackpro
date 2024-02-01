@@ -1,59 +1,36 @@
 package com.syngenta.tasktrackpro.controller;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.syngenta.tasktrackpro.entity.Employee;
-import com.syngenta.tasktrackpro.service.BusinessLogic;
+import com.syngenta.tasktrackpro.dto.EmployeeDto;
+import com.syngenta.tasktrackpro.models.Employee;
 
-@RestController
-public class EmployeeController {
 
+@RequestMapping("/api/v1")
+public interface EmployeeController {
 	
-	@Autowired
-	private BusinessLogic blogic;
-	
-	public EmployeeController() {
-		super();
-	}
-	
-	@PostMapping("/employee")
-	public  Employee addEmployee(@RequestBody Employee emp) {
-		this.blogic.addEmployee(emp);
-		return emp;
-	}
-	
+	@PostMapping("/create")
+	public  void addEmployee(@RequestBody Employee emp) ;
 	
 	@GetMapping("/employees")
-	public List<Employee> getALLEmployee() {
-		return this.blogic.getALLEmployee();
-	}
+	public List<EmployeeDto> getALLEmployee() ;
     
-	@GetMapping("employee/{employeeId}")
-	public Employee getEmployee(@PathVariable String employeeId) {
-		return this.blogic.getEmployee(Integer.parseInt(employeeId));
-	}
+	@GetMapping("/{employeeId}")
+	public EmployeeDto getEmployee(@PathVariable Integer employeeId);
 	
-	@DeleteMapping("employee/{employeeId}")
-	public Employee deleteByID(@PathVariable String employeeId) {
-		return this.blogic.deleteByID(Integer.parseInt(employeeId));
-	}
+	@DeleteMapping("/{employeeId}")
+	public void deleteByID(@PathVariable Integer employeeId);
     
-	@PutMapping("/employee")
-	public Employee updateEmployee(@RequestBody Employee employee) {
-		this.blogic.updateEmployee(employee);
-		return employee;
-	}
-	
+	@PutMapping("/update")
+	public EmployeeDto updateEmployee(@RequestBody EmployeeDto emp);
 }
