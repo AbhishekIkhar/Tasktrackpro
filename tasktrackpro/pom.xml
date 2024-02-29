@@ -16,44 +16,41 @@
 <description>first springboot project</description>
 <properties>
 <java.version>17</java.version>
-
-
+ 
+ 
 </properties>
-
+ 
     
 <dependencies>
 <dependency>
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
- 
-		<dependency>
+<dependency>
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
-
+ 
 <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 <dependency>
-    <groupId>org.modelmapper</groupId>
-    <artifactId>modelmapper</artifactId>
-    <version>2.4.3</version>
+<groupId>org.modelmapper</groupId>
+<artifactId>modelmapper</artifactId>
+<version>2.4.3</version>
 </dependency>
-
  
-		<dependency>
+
+<dependency>
 <groupId>org.projectlombok</groupId>
 <artifactId>lombok</artifactId>
 <optional>true</optional>
 </dependency>
- 
- 
-		<dependency>
+
+<dependency>
 <groupId>org.postgresql</groupId>
 <artifactId>postgresql</artifactId>
 <scope>runtime</scope>
 </dependency>
- 
-		<dependency>
+<dependency>
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-test</artifactId>
 <scope>test</scope>
@@ -63,6 +60,8 @@
 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 <version>2.3.0</version>
 </dependency>
+
+
 <dependency>
 <groupId>io.springfox</groupId>
 <artifactId>springfox-swagger2</artifactId>
@@ -75,26 +74,29 @@
 </dependency>
 <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 <dependency>
-    <groupId>org.modelmapper</groupId>
-    <artifactId>modelmapper</artifactId>
-    <version>2.4.4</version>
+<groupId>org.modelmapper</groupId>
+<artifactId>modelmapper</artifactId>
+<version>2.4.4</version>
 </dependency>
-
+<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest</artifactId>
+    <version>2.2</version>
+    <scope>test</scope>
+</dependency>
 </dependencies>
- 
-	<build>
+<packaging>jar</packaging>
+<build>
 <plugins>
 <plugin>
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-maven-plugin</artifactId>
 </plugin>
- 
-			<plugin>
+<plugin>
 <groupId>org.apache.maven.plugins</groupId>
 <artifactId>maven-surefire-plugin</artifactId>
 <version>2.19.1</version>
 </plugin>
 </plugins>
 </build>
- 
 </project>

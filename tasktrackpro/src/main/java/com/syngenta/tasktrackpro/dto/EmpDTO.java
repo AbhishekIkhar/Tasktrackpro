@@ -2,12 +2,20 @@ package com.syngenta.tasktrackpro.dto;
 
 import javax.persistence.Column;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class EmpDTO {
+	@JsonIgnore
+	private int id;
 	private String name;
 	private String email;
 	private String dept;
@@ -19,11 +27,6 @@ public class EmpDTO {
 		this.email = email;
 		this.dept = dept;
 		this.contact = contact;
-	}
-
-	public EmpDTO() {
-		// TODO Auto-generated constructor stub
-
 	}
 
 }

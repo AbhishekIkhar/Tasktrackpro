@@ -1,6 +1,8 @@
 package com.syngenta.tasktrackpro.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -21,10 +23,10 @@ public class EmpServiceImpl implements EmpService {
 	private ModelMapper modelMapper;
 
 	@Autowired
-	public EmpServiceImpl(ModelMapper modelMapper, EmpRepository empRepository) {
+	public EmpServiceImpl(EmpRepository empRepository) {
 		// numtoEntity=new HashMap<>();
 		this.empRepository = empRepository;
-		this.modelMapper = modelMapper;
+		//this.modelMapper = modelMapper;
 
 	}
 
@@ -40,10 +42,7 @@ public class EmpServiceImpl implements EmpService {
 		Employee employee = empRepository.findById(id)
 				.orElseThrow(() -> new EmployeeNotFound("Employee with id " + id + " does not exist"));
 
-		// Convert the Employee entity to EmpDTO and return
-		// return convertEmpToDTO(employee);
-		return EmpDTO.builder().contact(employee.getContact()).dept(employee.getDept()).name(employee.getName())
-				.email(employee.getEmail()).build();
+		return convertEmpToDTO(employee);
 	}
 
 	public List<EmpDTO> getEmployeesByName(String name) {
@@ -51,29 +50,29 @@ public class EmpServiceImpl implements EmpService {
 		return employees.stream().map(emp -> convertEmpToDTO(emp)).collect(Collectors.toList());
 	}
 
+	public Optional<Employee> getByContact(long contact) {
+		return empRepository.findByContact(contact);
+	}
+
 	@Override
 	public EmpDTO addEmployee(EmpDTO e) {
 		// TODO Auto-generated method stub
-
-		// empRepository.save(convertDTOToEmp(e));
-		// numtoEntity.put(e.getContact(), e);
-//		numtoEntity.put(e.getContact(), e);
-
 		return convertEmpToDTO(empRepository.save(convertDTOToEmp(e)));
 
 	}
 
 	@Override
-	public void deleteEmp(int id) {
+	public String deleteEmp(int id) {
 		// TODO Auto-generated method stub
 		Employee employee = empRepository.findById(id)
 				.orElseThrow(() -> new EmployeeNotFound("Employee with id " + id + " does not exist"));
 
 		empRepository.delete(employee);
+		return "Employee with id"+id+" deleted successfullly";
 
 	}
 
-	private Employee convertDTOToEmp(EmpDTO dto) {
+	public Employee convertDTOToEmp(EmpDTO dto) {
 //       return numtoEntity.getOrDefault(dto.getContact(), null);
 
 //		Employee employee = new Employee();
@@ -102,7 +101,7 @@ public class EmpServiceImpl implements EmpService {
 		return convertEmpToDTO(employee);
 	}
 
-	private EmpDTO convertEmpToDTO(Employee emp) {
+	public EmpDTO convertEmpToDTO(Employee emp) {
 //		EmpDTO empDTO = new EmpDTO();
 //		empDTO.setContact(emp.getContact());
 //		empDTO.setDept(emp.getDept());
@@ -128,10 +127,39 @@ public class EmpServiceImpl implements EmpService {
 	}
 
 	@Override
-	public List<EmpDTO> getEmployeesByNameOrId(String name, int id) {
+	public List<EmpDTO> getEmployeesByNameOrId(String name, Integer id) {
 		// TODO Auto-generated method stub
 		List<Employee> employees = empRepository.findByNameOrId(name, id);
 		return employees.stream().map(emp -> convertEmpToDTO(emp)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EmpDTO> getEmployeesByContactList(List<Long> contacts) {
+		// TODO Auto-generated method stub
+//		List<Employee> employeesList = new ArrayList<>();
+//		for (Long contact : contacts) {
+//			Optional<Employee> employee = empRepository.findByContact(contact);
+//			if (employee.isPresent()) {
+//				employeesList.add(employee.get());
+//			} else {
+//				continue;
+//			}
+//		}
+//
+//		List<EmpDTO> empDTOList = new ArrayList<>();
+//		for (Employee emp : employeesList) {
+//			empDTOList.add(convertEmpToDTO(emp));
+//		}
+//
+//		return empDTOList;
+//		
+
+		// List<EmpDTO>empDTOList=new ArrayList<>();
+		return contacts.stream()
+				.map(c -> empRepository.findByContact(c)
+						.orElseThrow(() -> new EmployeeNotFound("Employee with contact " + c + " does not exist")))
+				.map((e) -> convertEmpToDTO(e)).collect(Collectors.toList());
+
 	}
 
 }

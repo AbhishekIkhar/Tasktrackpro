@@ -27,7 +27,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("REST API for TaskTrackPro")
-				.description("This is the backend applicatio to " + "learn CRUD operations").build();
+				.description("This is the backend application to " + "learn CRUD operations").build();
 	}
 
 }
